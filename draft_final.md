@@ -176,9 +176,10 @@ Anyone reading this paper for the mechanism will find it anticipated, and correc
    resolution, guardrail predicates — where existing agent measurement treats the harness as a black box.
 5. A **four-valued verdict alphabet** (§6.2) in which `INVALID` and `NOT RUN` are distinct from both
    `PASS` and `FAIL`, and the loss-of-recomputation argument for why `INVALID` dominates.
-6. A **worked case of denominator mismatch in the circulated literature** (§8.1): a task-completion score
-   reported as a false-completion rate, i.e. inverted in meaning — the paper's own mode 3, committed in
-   the literature about mode 3.
+6. A **worked case of denominator mismatch** (§8.1): a task-completion score reported as a
+   false-completion rate, i.e. inverted in meaning — the paper's own mode 3, committed in an earlier
+   draft of this paper and carrying an attribution to an industry report that could not afterwards be
+   located.
 7. A demonstration that **the auditor is inside the system audited** (§7.3, §7.4), including three
    defective checks and one defective mutation test that this author wrote in one session while trying to
    be careful.
@@ -340,6 +341,15 @@ measurement.
 The analysis, instrument by instrument. Each subsection states what the instrument was, what it becomes,
 and what is lost or gained. §4.6 collects the results.
 
+**What is counted as an instrument.** Four things are analysed. Three are the instruments the source audit
+named (§2.2): the falsifiability condition, same-origin detection, and mutation. The fourth is a property
+the source audit never called an instrument because it never had to — recomputation (§2.3), the substrate
+under all three, which becomes visible as a separate thing only when it is removed. §1.3's "three of four"
+counts these four. The two further rows in §4.6 — the verdict alphabet and the metric denominator — are not
+instruments; they are consequences of the loss, carried in that table because they belong with it rather
+than to complete a count.
+
+
 ### 4.1 Falsifiability — transfers unchanged
 
 **In the source.** A property no mutant can kill is a decoration. The instrument asks: is there any
@@ -417,6 +427,28 @@ is exactly what makes probe construction cheap here.
 
 So the instrument that degrades and the instrument that strengthens are degraded and strengthened by the
 same missing piece. That is not a coincidence; it is the shape of the loss.
+
+**What strengthening does not buy.** There is an obvious objection here, and it should be answered rather
+than left to the reader. In the source system an arbitrary broken mutant is killed by everything, which is
+precisely why the mutants had to be plausible variants; a path that does not exist, a write to a read-only
+location, a guardrail-violating input are all conditions that *obviously* fail. If obvious mutants were
+uninformative there, why are obvious probes informative here?
+
+The answer is that the two experiments ask different questions. A mutation experiment asks whether a
+property discriminates among *plausible* behaviours, which is why the mutant must be plausible. A probe
+asks whether the harness can carry a failure from the point of failure to the point of reporting, which is
+why the failure must be undeniable. The second question only appears trivial because its answer is assumed;
+in the systems §5.2 describes, the signal is lost in transport, so a condition that obviously fails is
+exactly the condition that distinguishes a harness which reports from one which cannot. The probe tests the
+*pipeline*, not the agent's discrimination.
+
+That is a necessary condition for detecting subtle failure, not a sufficient one. A suite of undeniable
+probes cannot show that an agent recognises a subtle target drift (§5.4); it can only show that, if the
+agent did recognise one, the report would survive the trip out. The stronger test needs a level-2 witness,
+and the witness is limited by the same loss of recomputation (§4.4). So the instrument is weak, and its
+weakness is not fixable here — but "weak" and "unnecessary" are different verdicts, and in a
+non-recomputable system the necessary condition is usually the only one available.
+
 
 ### 4.4 Recomputation — lost, and this is load-bearing
 
@@ -639,12 +671,20 @@ narration half of mode 2. Cannot catch a fact read faithfully from a stale or wr
 **Level 2 — execution witness.** *Is there an effect outside the transcript?* A witness is an observation
 that would have differed had the work failed: file digest before and after, a row count from the
 database rather than from the agent's summary of it, an exit status captured out-of-band. Design rule:
-**the witness must be read through a channel the action did not write to.** This is the operational
-content of "independent", and it is what fails in modes 1 and 3. It is also the level most exposed by
-§4.4: without recomputation, the witness is the *only* thing that can stand in for ground truth, and it
-must be captured live because it cannot be re-derived later.
+**the witness must be read through a channel whose value is not determined by the action's own narration
+or the action's own resolution.** This is the operational content of "independent", and it is what fails
+in modes 1 and 3. It is also the level most exposed by §4.4: without recomputation, the witness is the
+*only* thing that can stand in for ground truth, and it must be captured live because it cannot be
+re-derived later.
 
-The empirical warrant: the 3%-vs-46% gap in §3.1 is produced by exactly this — a dual-control domain in
+The rule is stated in terms of determination rather than in terms of writing, because an action can leave a
+channel unread and still determine its value: an exported environment variable, a changed working
+directory, a touched mtime, a file written by a subprocess the action launched. "The action did not write
+to it" is therefore too narrow a test, and a witness that satisfies it can still be the action's own echo.
+The corresponding test in §4.2 is the same one: does the witness resolve a coordinate that the action also
+resolves?
+
+The empirical warrant: the 3%-vs-45–48% gap in §3.1 is produced by exactly this — a dual-control domain in
 which an independent party can read the state. Level 2 is an attempt to buy that independence cheaply.
 
 **Level 3 — mutation probing.** *Can the pipeline report failure at all?* Inject a condition that must
@@ -666,6 +706,19 @@ An audit must return four things, and must not collapse them into two.
 | **FAIL** | the audit ran; at least one level did not hold |
 | **INVALID** | the audit ran, but a level could not be evaluated — no witness obtainable, or no probe constructible |
 | **NOT RUN** | the audit did not run — no harness access, no transcript, no environment |
+
+**A verdict a naive alphabet collapses.** The failure mode this alphabet exists to prevent is returning
+`PASS` for an audit that could not be completed. One case needs stating explicitly, because it looks like
+a finding and is not.
+
+*Same-origin, not found.* The coordinate list is an open set, so failing to find a shared premise is not
+`PASS`: absence of the finding is not a finding of absence. It is also not `FAIL`, because not found does
+not mean absent. The default is `INVALID` — unless the audit can certify that the coordinate list was
+complete for the question class at issue. That certification is rare and is itself hard to audit, which is
+why §4.2 expects `INVALID` to dominate. This is the level-1 counterpart of the probe-suite adequacy problem
+in §9: in both cases the audit's answer is relative to a set whose completeness is assumed rather than
+shown.
+
 
 ### 6.3 Why three inequalities, and why the fourth verdict dominates here
 
@@ -703,6 +756,14 @@ it is a case where §4.4's loss reaches all the way up into the methodology.
 
 Illustrative, not experimental. No measurement is reported; outputs shown are what the semantics dictate,
 verified for this paper where tagged.
+
+**What these cases are instances of.** They are not independent evidence, and they are not meant to be
+read as a survey of how agents fail. Each one instantiates a failure mode that §3.1 already measured: the
+65.4% false-completion figure, the 76.4%-vs-76.8% check-running rates, and the 45–48%-vs-3% control-domain
+gap are the prevalence claims, and §5 is the mechanism account. The cases exist to make that mechanism
+operable — to show what the failure looks like in a pipeline, in a report, in a path resolver, in a
+mutation test — so that a reader can look for it. Their role is to make the taxonomy executable; it is not
+to establish that the taxonomy is common. Prevalence is a separate claim, and §9 declines to make it.
 
 ### 7.1 Case A — a pipeline that eats the failure
 
@@ -845,8 +906,17 @@ recomputation available, the audit cannot otherwise distinguish its own success 
 ### 8.1 The denominator mismatch, worked in full
 
 This subsection exists because the paper argues that denominators are where this literature breaks, and
-it would be a poor argument if made only in the abstract. Here is a case where it broke, in the
-circulated secondary literature, in a way that inverted a number's meaning.
+it would be a poor argument if made only in the abstract. Here is a case where it broke: in an earlier
+draft of this paper, in a way that inverted a number's meaning.
+
+**Where the case sits.** An earlier version of this subsection described the break as having occurred in
+the circulated secondary literature. That description is withdrawn, because it cannot be supported: a
+search for a secondary source reporting 77.4 as a false-completion rate located none (Appendix C records
+the attribution as `MISATTRIBUTED`). What can be documented is the version of the error that certainly
+existed — in this paper's own earlier draft — together with the attribution it carried to an industry
+report that no search could find. The example is not weaker for being ours. It is stronger, because the
+same failure appears twice in it: a number changed frames, and a source was named that could not be
+checked.
 
 **The number.** A figure of **77.4%** was carried into an earlier draft of this paper as a
 false-completion rate, attributed to an industry "Trust Layer" report.
@@ -878,10 +948,12 @@ losing its sign.
 3. **Attribution to a plausible source.** "Industry report, 2026" is an unfalsifiable-by-inspection
    attribution. It made the number checkable in principle and checked in practice by nobody.
 
-**What it illustrates.** This is mode 3 — target drift — occurring in the literature about mode 3. The
-number was fresh, faithfully transported, correctly quoted as characters, and about the wrong object. The
-verification (the citation) drifted with the claim (the figure), which is precisely the §5.4 structure:
-the check resolved the same coordinate as the action.
+**What it illustrates.** This is mode 3 — target drift — in a paper about mode 3. The number was fresh,
+faithfully transported, correctly quoted as characters, and about the wrong object. The verification (the
+citation) drifted with the claim (the figure), which is precisely the §5.4 structure: the check resolved
+the same coordinate as the action. That the drift happened here, rather than only in the work this paper
+examines, is the reason the case is included: it is not an illustration of someone else's error but a
+record of this one.
 
 **The discipline it implies.** Not "be more careful". Carefulness did not fail here; *searching* is what
 found it. A denominator is a claim, and unlike a numeric value it has no typo to catch — it is either the

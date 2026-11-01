@@ -58,9 +58,9 @@ byte-identical:
 
 ```
 $ ./build/build.sh && cat draft_final.sha256
-26db3f1b392daafd3de93c21878baec871d3ad2704405519a93467ea6ca97e8f  draft_final.pdf
+c4862dd04aaee55b4bedeca40e25781b00e3c375742d9ecaba3f3b9c208704b5  draft_final.pdf
 $ ./build/build.sh && cat draft_final.sha256
-26db3f1b392daafd3de93c21878baec871d3ad2704405519a93467ea6ca97e8f  draft_final.pdf
+c4862dd04aaee55b4bedeca40e25781b00e3c375742d9ecaba3f3b9c208704b5  draft_final.pdf
 ```
 
 Without the pinned epoch the timestamp changes on every run and the checksum
@@ -88,9 +88,9 @@ To reproduce the recorded hash, build on the toolchain versions listed above.
 | --- | --- | --- |
 | Content overflows the text block | `grep -c 'Overfull \hbox'` on the log | `0` |
 | Characters silently dropped | `grep -c 'Missing character'` on the log | `0` |
-| Multi-page output | `pdfinfo` → `Pages` | `> 1` (currently 25) |
+| Multi-page output | `pdfinfo` → `Pages` | `> 1` (currently 26) |
 | Body text present | `pdftotext … \| grep -c 'Task Completed'` | `> 0` (currently 3) |
-| Empirical figure present | `pdftotext … \| grep -c '65.4%'` | `> 0` (currently 6) |
+| Empirical figure present | `pdftotext … \| grep -c '65.4%'` | `> 0` (currently 7) |
 | Chinese text present | `pdftotext … \| grep -c '假完成'` | `> 0` (currently 3) |
 
 The first two are the important ones. `Missing character` is the tofu detector:
@@ -125,5 +125,5 @@ margin. It is not content overflow, which is why `Overfull \hbox` is 0.
 ## Table of contents
 
 The PDF carries a two-level table of contents (`--toc --toc-depth=2`), which is
-appropriate at 25 pages. To match the Markdown exactly, drop those two flags in
+appropriate at 26 pages. To match the Markdown exactly, drop those two flags in
 `build.sh` and rebuild.

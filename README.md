@@ -38,7 +38,7 @@ M1  masked failure (the defect)
 |:--|:--|:--|
 | **[`EXECUTIVE_BRIEF.md`](EXECUTIVE_BRIEF.md)** | 决策者 | 一页纸。痛点、方法、证据、教训。**先看这个。** |
 | `draft_final.md` | 同行 / 技术尽调 | 方法论论文。主线：一套为形式验证造的审计方法，搬到不可重算的系统上，哪件仪器还能用。 |
-| `draft_final.pdf` | 投递 / 客户 | 上述论文的排版稿，25 页 A4。由 `draft_final.md` 生成，校验值和重出方法见 [`BUILD.md`](BUILD.md)。 |
+| `draft_final.pdf` | 投递 / 客户 | 上述论文的排版稿，26 页 A4。由 `draft_final.md` 生成，校验值和重出方法见 [`BUILD.md`](BUILD.md)。 |
 | `agent_audit_demo.py` | 工程师 | 300 多行，纯标准库，无依赖。可当场跑。 |
 | `LICENSE` | — | MIT。 |
 

@@ -9,7 +9,15 @@ Nothing in the PDF is hand-edited, so a rebuild is always safe.
 ```
 
 `--check` exits non-zero if the PDF on disk no longer matches `draft_final.sha256`,
-or if any structural check below fails. Both modes are CI-safe.
+or if any of the six gates below fails. Both modes are CI-safe.
+
+Two of the six gates are read from a LaTeX log rather than from the PDF, so
+`--check` can only evaluate them when `build/build.log` is present. `build.sh`
+writes that file on every successful build. A PDF distributed without it has
+four gates checked and two **not evaluated** — `--check` says so explicitly
+rather than printing a pass it did not compute. To regenerate the log without
+changing the artifact, run `./build/build.sh`; the pinned `SOURCE_DATE_EPOCH`
+keeps the PDF byte-identical.
 
 ## Layout
 
@@ -21,13 +29,17 @@ release/
 ├── BUILD.md                this file
 └── build/
     ├── build.sh            one-shot pandoc + XeLaTeX + verification
+    ├── build.log           LaTeX log of the published build (generated)
     ├── header.tex          LaTeX preamble (fonts, tables, code wrapping)
     └── fixes.lua           pandoc filter (table column widths, URL breaking)
 ```
 
 `build/` is normally ignored by `.gitignore` (the Python sdist convention). The
 three sources are explicitly whitelisted at the end of that file so they travel
-with the published artifact instead of being silently excluded.
+with the published artifact instead of being silently excluded. `build.log` is
+deliberately *not* whitelisted: it is a per-build output, ignored by `build/*`,
+and its absolute paths would make the working tree dirty after every rebuild.
+Copy it alongside the PDF if you are distributing a package for review.
 
 ## Toolchain
 
@@ -86,16 +98,19 @@ To reproduce the recorded hash, build on the toolchain versions listed above.
 
 | Check | Command | Expected |
 | --- | --- | --- |
-| Content overflows the text block | `grep -c 'Overfull \hbox'` on the log | `0` |
-| Characters silently dropped | `grep -c 'Missing character'` on the log | `0` |
+| Content overflows the text block | `grep -c 'Overfull \hbox' build/build.log` | `0` |
+| Characters silently dropped | `grep -c 'Missing character' build/build.log` | `0` |
 | Multi-page output | `pdfinfo` → `Pages` | `> 1` (currently 26) |
 | Body text present | `pdftotext … \| grep -c 'Task Completed'` | `> 0` (currently 3) |
 | Empirical figure present | `pdftotext … \| grep -c '65.4%'` | `> 0` (currently 7) |
 | Chinese text present | `pdftotext … \| grep -c '假完成'` | `> 0` (currently 3) |
 
-The first two are the important ones. `Missing character` is the tofu detector:
-XeTeX drops an absent glyph without raising an error, so a broken font mapping
-produces a PDF that looks fine in a thumbnail and is missing text when read.
+The first two are the important ones, and they are the two that need the log.
+`Missing character` is the tofu detector: XeTeX drops an absent glyph without
+raising an error, so a broken font mapping produces a PDF that looks fine in a
+thumbnail and is missing text when read. Neither condition is visible in the
+PDF, which is why `build.sh` retains the log it evaluated and why the two rows
+above name `build/build.log` rather than "the log".
 
 ## The three layout hazards, and what handles them
 

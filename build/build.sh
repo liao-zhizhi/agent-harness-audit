@@ -82,7 +82,17 @@ verify() {
 
 if [ "$CHECK_ONLY" -eq 1 ]; then
   echo "== verifying existing $OUT"
-  verify "$OUT" ""
+  # The two log-based gates can only be checked if the build that produced this
+  # PDF left its log behind. build.sh writes one on every successful build; a
+  # PDF from before that change has none, and saying so is better than printing
+  # a pass that was never evaluated.
+  if [ -f "$BUILD_DIR/build.log" ]; then
+    verify "$OUT" "$BUILD_DIR/build.log"
+  else
+    verify "$OUT" ""
+    echo "  NOTE: $BUILD_DIR/build.log is absent, so overfull/missing were NOT"
+    echo "        evaluated. Run ./build/build.sh to regenerate it."
+  fi
   echo
   echo "== recorded checksum"
   ( cd "$RELEASE_DIR" && sha256sum -c draft_final.sha256 )
@@ -207,6 +217,12 @@ echo
 echo "== publishing"
 cp "$WORK/paper.pdf" "$OUT"
 ( cd "$RELEASE_DIR" && sha256sum draft_final.pdf > draft_final.sha256 )
+# Retain the log the gates were evaluated against, so that `--check` (and any
+# reviewer) can re-read the overfull/missing counts instead of taking them on
+# trust. It is ignored by .gitignore, so committing it is not required and the
+# working tree stays clean across rebuilds.
+cp "$WORK/paper.log" "$BUILD_DIR/build.log"
 printf '  wrote %s\n' "$OUT"
 printf '  wrote %s\n' "$SUM"
+printf '  wrote %s\n' "$BUILD_DIR/build.log"
 cat "$SUM" | sed 's/^/  /'

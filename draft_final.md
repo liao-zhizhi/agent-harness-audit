@@ -913,11 +913,11 @@ draft of this paper, in a way that inverted a number's meaning.
 **Where the case sits.** An earlier version of this subsection described the break as having occurred in
 the circulated secondary literature. That description is withdrawn, because it cannot be supported: a
 search for a secondary source reporting 77.4 as a false-completion rate located none (Appendix C records
-the attribution as `MISATTRIBUTED`). What can be documented is the version of the error that certainly
-existed — in this paper's own earlier draft — together with the attribution it carried to an industry
-report that no search could find. The example is not weaker for being ours. It is stronger, because the
-same failure appears twice in it: a number changed frames, and a source was named that could not be
-checked.
+the attribution as `MISATTRIBUTED`, "no such false-completion rate located"). What can be documented is the
+version of the error that certainly existed — in this paper's own earlier draft — together with the
+attribution it carried to an industry report that no search could afterwards locate. The example is not
+weaker for being ours. It is stronger, because the same failure appears twice in it: a number changed
+frames, and a source was named that could not be checked.
 
 **The number.** A figure of **77.4%** was carried into an earlier draft of this paper as a
 false-completion rate, attributed to an industry "Trust Layer" report.

@@ -13,7 +13,8 @@ htmlcov/
 build/
 dist/
 
-# LaTeX build products (the paper is distributed as Markdown)
+# LaTeX build products. The sources live in build/ (see the whitelist at the
+# bottom); everything here is regenerated on every run.
 *.aux
 *.log
 *.out
@@ -32,3 +33,27 @@ Thumbs.db
 # Anything the demo might leave behind
 /tmp/
 *.tmp
+
+# ---------------------------------------------------------------------------
+# Reproducible PDF build sources.
+#
+# The `build/` rule above exists for Python packaging artifacts. These three
+# files are different: they are part of the published record, so that anyone
+# with this repository can rebuild draft_final.pdf and check it against
+# draft_final.sha256.
+#
+# Named individually rather than `!build/**` on purpose. A broad glob would also
+# re-include *.aux, *.log or scratch images left behind if someone runs LaTeX
+# directly inside build/, and those must never be committed. The `build/*` line
+# ignores everything in the directory first, so only the three files below are
+# re-admitted -- *.aux and *.log are covered by the rules above, but a stray
+# image would not be.
+#
+# Git will not re-include a file whose parent directory is still excluded, hence
+# `!build/` must come first.
+!build/
+build/*
+!build/build.sh
+!build/header.tex
+!build/fixes.lua
+

@@ -1,0 +1,59 @@
+% Preamble for draft_final.md -> draft_final.pdf
+%
+% Loaded by pandoc via `-H header.tex`. Everything here exists to defend three
+% failure modes that the pandoc default template does not handle for this
+% particular document: CJK glyphs, wide tables, and long unbreakable code/URLs.
+
+% ---- page geometry -------------------------------------------------------
+\usepackage[a4paper,margin=2.3cm,top=2.4cm,bottom=2.4cm]{geometry}
+
+% ---- fonts ---------------------------------------------------------------
+\usepackage{fontspec}
+\usepackage{xeCJK}
+
+\setmainfont{Noto Serif}
+\setsansfont{Noto Sans}
+\setmonofont{Noto Sans Mono}[Scale=0.86]
+
+% Chinese: serif for body, sans/mono so that headings and CJK text inside code
+% spans still resolve. Without an explicit CJK mono face, Chinese inside
+% \texttt silently falls back to tofu.
+\setCJKmainfont{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\xeCJKsetup{CJKecglue={\hskip 0.08em}}
+
+% ---- code blocks: never overflow ----------------------------------------
+\usepackage{fvextra}
+\fvset{breaklines=true,breakanywhere=true,fontsize=\small}
+% pandoc emits highlighted blocks in a "Highlighting" environment, which has
+% its own verbatim settings; recustomise it or the breaklines above are ignored.
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{%
+  breaklines=true,breakanywhere=true,commandchars=\\\{\},fontsize=\small}
+
+% ---- tables --------------------------------------------------------------
+\usepackage{longtable,booktabs,array}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\LTpre}{0.6em}
+\setlength{\LTpost}{0.8em}
+
+% ---- URLs: breakable at any character -----------------------------------
+\usepackage{xurl}
+\usepackage[hidelinks,breaklinks=true]{hyperref}
+\urlstyle{same}
+
+% ---- typography ----------------------------------------------------------
+\usepackage{microtype}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+\linespread{1.06}
+
+% ---- glyph fallback ------------------------------------------------------
+% Noto Serif has no U+2192 (->) or U+2260 (!=), and XeTeX drops missing glyphs
+% silently: the character just disappears, no error, no box. Both appear in
+% this document ("45-48% -> 3%", "masked != true"), so an argument would read
+% wrong without them. Map to math symbols, which are always available.
+\usepackage{newunicodechar}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{≠}{\ensuremath{\neq}}

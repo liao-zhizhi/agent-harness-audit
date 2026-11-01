@@ -1,0 +1,25 @@
+# Keep the repository byte-identical across platforms.
+#
+# Without this, a Windows clone with the common `core.autocrlf=true` setting
+# rewrites every text file to CRLF on checkout, which changes the sha256 of
+# every file in this directory. The demo still runs under CRLF (Python accepts
+# it), but any published checksum, and any diff a reviewer makes against the
+# preprints, would then disagree for a reason that has nothing to do with the
+# content.
+
+* text=auto eol=lf
+
+# Explicit, so that no future attribute rule can quietly override it.
+*.md      text eol=lf
+*.py      text eol=lf
+*.txt     text eol=lf
+*.json    text eol=lf
+LICENSE   text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Nothing here is binary today. If a figure or archive is added later, mark it
+# so it is not subjected to text normalisation.
+*.pdf     binary
+*.png     binary
+*.zip     binary

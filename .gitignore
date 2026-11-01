@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Test / build artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# LaTeX build products (the paper is distributed as Markdown)
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Anything the demo might leave behind
+/tmp/
+*.tmp

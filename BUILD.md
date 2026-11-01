@@ -58,9 +58,9 @@ byte-identical:
 
 ```
 $ ./build/build.sh && cat draft_final.sha256
-c4862dd04aaee55b4bedeca40e25781b00e3c375742d9ecaba3f3b9c208704b5  draft_final.pdf
+fd63d8de88669eb5d4793669cd45f6f03bb6c5503432f87cb6078c62ff408fba  draft_final.pdf
 $ ./build/build.sh && cat draft_final.sha256
-c4862dd04aaee55b4bedeca40e25781b00e3c375742d9ecaba3f3b9c208704b5  draft_final.pdf
+fd63d8de88669eb5d4793669cd45f6f03bb6c5503432f87cb6078c62ff408fba  draft_final.pdf
 ```
 
 Without the pinned epoch the timestamp changes on every run and the checksum

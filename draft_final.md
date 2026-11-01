@@ -176,10 +176,11 @@ Anyone reading this paper for the mechanism will find it anticipated, and correc
    resolution, guardrail predicates — where existing agent measurement treats the harness as a black box.
 5. A **four-valued verdict alphabet** (§6.2) in which `INVALID` and `NOT RUN` are distinct from both
    `PASS` and `FAIL`, and the loss-of-recomputation argument for why `INVALID` dominates.
-6. A **worked case of denominator mismatch** (§8.1): a task-completion score reported as a
-   false-completion rate, i.e. inverted in meaning — the paper's own mode 3, committed in an earlier
-   draft of this paper and carrying an attribution to an industry report that could not afterwards be
-   located.
+6. A **worked case of denominator mismatch, committed twice in one figure** (§8.1): a task-completion score
+   reported as a false-completion rate — mode 3 in the number's frame — attributed to an industry report
+   that no search could afterwards locate — mode 3 again, in its source. The second failure is why the case
+   is kept: an unfalsifiable-by-inspection attribution is exactly what this paper is about, and here it was
+   committed by this paper.
 7. A demonstration that **the auditor is inside the system audited** (§7.3, §7.4), including three
    defective checks and one defective mutation test that this author wrote in one session while trying to
    be careful.

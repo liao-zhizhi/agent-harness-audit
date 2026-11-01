@@ -42,6 +42,8 @@ M1  masked failure (the defect)
 | `agent_audit_demo.py` | 工程师 | 300 多行，纯标准库，无依赖。可当场跑。 |
 | `LICENSE` | — | MIT。 |
 
+**关于副本一致性。** 本目录的 `draft_final.pdf` 在固定时间戳下构建，`draft_final.sha256` 记录其唯一哈希，重出后逐字节一致（见 [`BUILD.md`](BUILD.md)）。通过预印本平台、邮件或其他渠道流通的副本，正文与本版本相同，但 PDF 元数据（`CreationDate` 等）可能不同，因此字节哈希不等于本仓库记录值。判断正文是否为同一版，请比对文字；判断是否为同一次构建，请用本仓库的哈希。
+
 ---
 
 ## 核心结论（三句）

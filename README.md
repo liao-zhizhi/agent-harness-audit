@@ -1,5 +1,12 @@
 # 执行层审计：AI Agent 的"假完成"
 
+> 📄 **Paper / Preprint** (this repository)
+> 
+> 💻 **Engineering Implementation / Sidecar Tool**: [harness-audit-sidecar](https://github.com/liao-zhizhi/harness-audit-sidecar)
+> *A zero-dependency MCP proxy that catches "false completion" using four-valued verdicts and independent Git/file witnesses.*
+> 
+> 🚀 **[Download Latest Release (v0.5.0)](https://github.com/liao-zhizhi/harness-audit-sidecar/releases/tag/v0.5.0)**
+
 > Agent 说"任务完成"时，你拿到的是一句**声称**，不是一次**观察**。
 > 这套东西审计的是：**你的 Harness 有没有能力报出失败。**
 

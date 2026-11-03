@@ -135,3 +135,21 @@ M1  masked failure (the defect)
 
 这篇论文最有意思的地方不是它抓到了什么，是它**证明了抓它的工具本身也需要被抓**——而这件事有记录，
 带日期。
+
+---
+
+## 同系列其他论文的源码
+
+本仓库是同系列论文的**稿件与复现材料**仓库。第三篇（运行时代谢与条件免疫）的完整源码在
+[`metabolism_paper/`](metabolism_paper/)，与 Zenodo v2 deposit 逐字节一致：
+
+| 文件 | 说明 |
+|:--|:--|
+| `metabolism_paper/main.tex` | 稿件源码（IEEEtran conference） |
+| `metabolism_paper/references.bib` | 14 条文献 |
+| `metabolism_paper/main.pdf` | 编译产物，10 页；哈希记录在 `main.sha256` |
+| `metabolism_paper/build.sh` | 编译 + 门禁（0 overfull、0 未定义引用、PDF 元数据非空），固定 `SOURCE_DATE_EPOCH` 使 PDF 哈希可复现 |
+| `metabolism_paper/pack_v2.py` | 确定性重打 `metabolism_paper_v2.zip`，并对照已发布哈希 |
+
+该目录下的 `main.sha256` 可自检；`python3 metabolism_paper/pack_v2.py` 会打印归档哈希并说明是否仍与
+Zenodo 上的 v2 一致。若不打印 `matches`，说明源码在 deposit 之后被改动过——这是需要知道的信息，不是构建失败。

@@ -1,0 +1,241 @@
+% ===========================================================================
+%  references.bib -- only entries whose metadata was verified against the
+%  publisher, the proceedings, or the project's own pages. Nothing here is
+%  reconstructed from memory.
+%
+%  Verified on 2026-11-02:
+%    - COLM 2024 accepted-papers list + Microsoft Research publication page
+%      (AutoGen: title, 13 authors, venue).
+%    - NeurIPS proceedings pages (Zheng et al. 2023; Panickssery et al. 2024).
+%    - IJCAI 1973 proceedings (Hewitt, Bishop, Steiger; pp. 235--245).
+%    - Pragmatic Bookshelf product page (Nygard, 2nd ed., ISBN 9781680502398).
+%    - Project pages for LangChain, LangGraph, CrewAI (no formal venue exists
+%      for a software package, so these are misc entries with howpublished).
+%
+%  WITNESS NOTE. Three entries below carry an eprint field because a
+%  registration agency can re-resolve them: AutoGen 2308.08155, MT-Bench
+%  2306.05685, and Panickssery 2404.13076, each confirmed against
+%  export.arxiv.org by the sidecar's CitationAuditProxy.
+%
+%  Those same three also repeat the identifier as a clickable note. This is not
+%  redundancy for its own sake: IEEEtran.bst has no eprint handler, so the
+%  machine-readable field is silently dropped at typesetting time. A witness
+%  that exists only in the .bib is a witness for the auditor, not for the
+%  reader -- and a reader who cannot resolve the identifier has to take the
+%  citation on faith, which is exactly what this paper argues against. The
+%  eprint field serves tooling; the note serves people; neither substitutes for
+%  the other.
+%
+%  The other eight split two ways as of the Zenodo v1 deposit. Three now carry
+%  a DataCite DOI (the two software entries and the method-transfer manuscript,
+%  see the DOI POLICY note below): resolvable at doi.org, but invisible to a
+%  CrossRef-only resolver, so they audit as INVALID under this project's own
+%  proxy while being perfectly verifiable by hand. The remaining five have no
+%  identifier at all -- not false, but unverifiable by anyone who does not
+%  already trust this file. That is the paper's own conclusion applied to the
+%  paper's own bibliography, and it is recorded rather than papered over. Do not
+%  invent an identifier to turn an INVALID green: a plausible-looking id is
+%  exactly the failure this file is meant to survive.
+%
+%  NOTE ON THIS FILE'S SYNTAX. BibTeX has no comment syntax inside an entry:
+%  a percent sign there is data, not a comment, and it will abort the file.
+%  Likewise a stray at-sign anywhere outside an entry -- including inside a
+%  comment line -- starts a new entry. Keep every remark in these top-of-file
+%  comments, and never write an at-sign in one.
+%
+%  NOTE ON THE STYLE. This document sets its bibliography with IEEEtran.bst
+%  1.14, which has two relevant limits. First, it defines no ISBN handler:
+%  an isbn field is read and silently dropped, so the Nygard entry repeats its
+%  ISBN inside note (which is printed after the publisher). Keep the two in
+%  sync -- the field is for machines, the note is for readers. Second, its
+%  format.note lowercases the FIRST character of a note unless the note begins
+%  with a brace; that is an escape hatch written into the style itself. Hence
+%  the doubled braces in every note below: with a single pair, "ISBN ..."
+%  would print as "iSBN ...".
+%
+%  The two software entries below use the biblatex entry type for software
+%  (entry type name: software), which is not a BibTeX type.
+%  BibTeX routes an undefined type to the style's default.type (here: misc),
+%  so they typeset correctly but emit one "entry type isn't style-file
+%  defined" warning each run. That is expected noise, not an error.
+% ===========================================================================
+
+% --- the authors' own prior work -------------------------------------------
+
+@misc{liaozhizhi2026methodtransfer,
+  author       = {Liaozhizhi},
+  title        = {From Formal Verification to Agents: A Method-Transfer Audit of
+                  ``False Completion'' in {AI} Agent Harnesses},
+  year         = {2026},
+  howpublished = {Manuscript and reproduction sources},
+  note         = {\url{https://github.com/liao-zhizhi/agent-harness-audit}},
+  doi          = {10.5281/zenodo.23891527}
+}
+
+% DOI POLICY, and why this file deliberately does NOT mirror these into note.
+%
+% The three authored entries below now carry a Zenodo DOI (10.5281/zenodo.*).
+% The earlier instruction here was to mirror a filled doi into note as well,
+% because IEEEtran.bst never prints the doi field. That mirroring is now
+% withheld on purpose: main.pdf shipped to Zenodo as v1 and its bytes are
+% frozen at 85c22506..., so a note that prints a DOI would describe a PDF
+% that does not exist. Keeping the identifier in the machine-readable field
+% only means the sources still typeset the archived bytes, while tools can
+% still resolve the DOI. If a future revision wants the DOI visible in print,
+% that is a v2 recompile -- not a silent edit here.
+%
+% Note also that these DOIs are registered with DataCite, not CrossRef.
+% A resolver that only knows CrossRef will 404 on them and must not be read as
+% evidence of a bad identifier; doi.org/DataCite resolves all three.
+
+@software{liaozhizhi2026sidecar,
+  author       = {Liaozhizhi},
+  title        = {harness-audit-sidecar: Execution-Layer Audit for {AI} Agent
+                  Harnesses},
+  year         = {2026},
+  version      = {0.7.0},
+  howpublished = {\url{https://github.com/liao-zhizhi/harness-audit-sidecar}},
+  note         = {{Version 0.7.0, MIT license}},
+  doi          = {10.5281/zenodo.23894204}
+}
+
+@software{liaozhizhi2026metabolism,
+  author       = {Liaozhizhi},
+  title        = {agent-metabolism-os: Metabolic Runtime Layers for {LLM} Agents},
+  year         = {2026},
+  version      = {0.3.0},
+  howpublished = {\url{https://github.com/liao-zhizhi/agent-metabolism-os}},
+  note         = {{Version 0.3.0, MIT license}},
+  doi          = {10.5281/zenodo.23893013}
+}
+
+% --- agent frameworks and orchestration ------------------------------------
+
+@misc{chase2022langchain,
+  author       = {Chase, Harrison},
+  title        = {{LangChain}},
+  year         = {2022},
+  howpublished = {\url{https://github.com/langchain-ai/langchain}},
+  note         = {{Open-source software}}
+}
+
+@inproceedings{wu2024autogen,
+  author    = {Wu, Qingyun and Bansal, Gagan and Zhang, Jieyu and Wu, Yiran and
+               Li, Beibin and Zhu, Erkang and Jiang, Li and Zhang, Xiaoyun and
+               Zhang, Shaokun and Liu, Jiale and Awadallah, Ahmed Hassan and
+               White, Ryen W. and Burger, Doug and Wang, Chi},
+  title     = {{AutoGen}: Enabling Next-Gen {LLM} Applications via Multi-Agent
+               Conversations},
+  booktitle = {Proceedings of the Conference on Language Modeling (COLM)},
+  year      = {2024},
+  eprint    = {2308.08155},
+  archivePrefix = {arXiv},
+  note      = {{\url{https://arxiv.org/abs/2308.08155}}}
+}
+
+@misc{langchain2024langgraph,
+  author       = {{LangChain Team}},
+  title        = {{LangGraph}: Stateful Orchestration for Agent Workflows},
+  year         = {2024},
+  howpublished = {\url{https://github.com/langchain-ai/langgraph}},
+  note         = {{Open-source software}}
+}
+
+@misc{moura2024crewai,
+  author       = {Moura, Jo{\~a}o},
+  title        = {{CrewAI}: Role-Playing Multi-Agent Orchestration},
+  year         = {2024},
+  howpublished = {\url{https://github.com/crewAIInc/crewAI}},
+  note         = {{Open-source software}}
+}
+
+% --- model-as-judge evaluation --------------------------------------------
+
+@inproceedings{zheng2023judging,
+  author    = {Zheng, Lianmin and Chiang, Wei-Lin and Sheng, Ying and
+               Zhuang, Siyuan and Wu, Zhanghao and Zhuang, Yonghao and Lin, Zi and
+               Li, Zhuohan and Li, Dacheng and Xing, Eric P. and Zhang, Hao and
+               Gonzalez, Joseph E. and Stoica, Ion},
+  title     = {Judging {LLM}-as-a-Judge with {MT-Bench} and {Chatbot Arena}},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  series    = {Datasets and Benchmarks Track},
+  year      = {2023},
+  eprint    = {2306.05685},
+  archivePrefix = {arXiv},
+  note      = {{\url{https://arxiv.org/abs/2306.05685}}}
+}
+
+@inproceedings{panickssery2024evaluators,
+  author    = {Panickssery, Arjun and Bowman, Samuel R. and Feng, Shi},
+  title     = {{LLM} Evaluators Recognize and Favor Their Own Generations},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2024},
+  eprint    = {2404.13076},
+  archivePrefix = {arXiv},
+  note      = {{\url{https://arxiv.org/abs/2404.13076}}}
+}
+
+% --- fault isolation and bio-inspired structure ---------------------------
+
+@inproceedings{hewitt1973actor,
+  author    = {Hewitt, Carl and Bishop, Peter and Steiger, Richard},
+  title     = {A Universal Modular {ACTOR} Formalism for Artificial Intelligence},
+  booktitle = {Proceedings of the 3rd International Joint Conference on
+               Artificial Intelligence (IJCAI)},
+  pages     = {235--245},
+  year      = {1973}
+}
+
+% The isbn field is kept for tools that read the database (Zotero, HAL import,
+% DOI lookups) even though the style drops it. note is what actually prints.
+% The mbox keeps the number atomic: an ISBN gets copied into a search box, so
+% a break after "978-1-68050-" would misrepresent it.
+
+@book{nygard2018release,
+  author    = {Nygard, Michael T.},
+  title     = {Release It! Design and Deploy Production-Ready Software},
+  edition   = {2nd},
+  publisher = {Pragmatic Bookshelf},
+  address   = {Raleigh, NC},
+  year      = {2018},
+  isbn      = {978-1-68050-239-8},
+  note      = {{ISBN \mbox{978-1-68050-239-8}}}
+}
+
+% --- formal proof assistants and the audited corpora -----------------------
+%
+% Added for the v2 revision (Section 4.4, Section 5.6). Metadata verified on
+% 2026-11-03: the Lean entry against the CADE-28 proceedings volume (LNAI
+% 12699, pp. 625--635); the two corpora against the remote URL recorded in
+% each checkout's git config, and their titles against the repositories' own
+% README files. The corpora are cited as artifacts under audit, not as
+% publications, so they carry no venue. Their dates are the copyright years
+% stated in the repositories.
+
+@inproceedings{demoura2021lean4,
+  author    = {de Moura, Leonardo and Ullrich, Sebastian},
+  title     = {The {Lean} 4 Theorem Prover and Programming Language},
+  booktitle = {Automated Deduction -- {CADE} 28},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12699},
+  publisher = {Springer},
+  pages     = {625--635},
+  year      = {2021}
+}
+
+@misc{openai2026tenproofs,
+  author       = {{OpenAI}},
+  title        = {Ten Advances in Mathematics and Theoretical Computer Science:
+                  {Lean} 4 Formalizations},
+  year         = {2026},
+  howpublished = {\url{https://github.com/openai/ten-proofs}},
+  note         = {{Audited from a shallow clone at Lean 4.32.0}}
+}
+
+@misc{deepmind2026alphaproofnexus,
+  author       = {{Google DeepMind}},
+  title        = {{AlphaProof Nexus} Results},
+  year         = {2026},
+  howpublished = {\url{https://github.com/google-deepmind/alphaproof-nexus-results}},
+  note         = {{Audited from a shallow clone at Lean 4.27.0}}
+}

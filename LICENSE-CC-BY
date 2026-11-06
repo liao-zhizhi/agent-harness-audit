@@ -1,0 +1,54 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Zhizhi Liao
+
+Applies to: the paper text in this repository — the Markdown manuscripts
+(draft_final.md, EXECUTIVE_BRIEF.md, BUILD.md), the compiled PDF, and the prose
+in the README. It does NOT apply to the reproduction scripts (agent_audit_demo.py,
+the build scripts), which are licensed under the MIT License (see LICENSE).
+
+You are free to:
+
+  Share — copy and redistribute the material in any medium or format, for any
+  purpose, even commercially.
+
+  Adapt — remix, transform, and build upon the material, for any purpose, even
+  commercially.
+
+Under the following terms:
+
+  Attribution — You must give appropriate credit, provide a link to this license,
+  and indicate if changes were made. You may do so in any reasonable manner, but
+  not in any way that suggests the licensor endorses you or your use.
+
+  No additional restrictions — You may not apply legal terms or technological
+  measures that legally restrict others from doing anything this license
+  permits.
+
+No warranties are given. The license may not give you all of the permissions
+necessary for your intended use. For example, other rights such as publicity,
+privacy, or moral rights may limit how you use the material.
+
+Suggested attribution:
+
+  Liao, Zhizhi. "Execution-Layer Auditing: False Completion in AI Agent
+  Harnesses". 2026. Licensed under CC BY 4.0.
+
+The manuscript itself credits the author as "liaozhizhi（廖至智）"; either form
+identifies the same person, and attribution in the manuscript's own style is
+acceptable.
+
+The full legal code is the binding text:
+
+  https://creativecommons.org/licenses/by/4.0/legalcode
+
+The human-readable deed, which this file summarises:
+
+  https://creativecommons.org/licenses/by/4.0/
+
+This summary is not the license. Where this file and the legal code differ, the
+legal code governs.
+
+Neither this license nor the MIT License grants a certification. Citing this
+paper, or running the demo it ships with, does not constitute an audit of any
+system and must not be presented as one.

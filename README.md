@@ -5,7 +5,7 @@
 > 💻 **Engineering Implementation / Sidecar Tool**: [harness-audit-sidecar](https://github.com/liao-zhizhi/harness-audit-sidecar)
 > *A zero-dependency MCP proxy that catches "false completion" using four-valued verdicts and independent Git/file witnesses.*
 > 
-> 🚀 **[Download Latest Release (v0.5.0)](https://github.com/liao-zhizhi/harness-audit-sidecar/releases/tag/v0.5.0)**
+> 🚀 **[Download Latest Release (v0.9.1)](https://github.com/liao-zhizhi/harness-audit-sidecar/releases/tag/v0.9.1)**
 
 > Agent 说"任务完成"时，你拿到的是一句**声称**，不是一次**观察**。
 > 这套东西审计的是：**你的 Harness 有没有能力报出失败。**
@@ -47,7 +47,7 @@ M1  masked failure (the defect)
 | `draft_final.md` | 同行 / 技术尽调 | 方法论论文。主线：一套为形式验证造的审计方法，搬到不可重算的系统上，哪件仪器还能用。 |
 | `draft_final.pdf` | 投递 / 客户 | 上述论文的排版稿，26 页 A4。由 `draft_final.md` 生成，校验值和重出方法见 [`BUILD.md`](BUILD.md)。 |
 | `agent_audit_demo.py` | 工程师 | 300 多行，纯标准库，无依赖。可当场跑。 |
-| `LICENSE` | — | MIT。 |
+| [`LICENSE`](LICENSE) | — | MIT，版权人 Zhizhi Liao（廖至智）。说明见文末[许可证](#许可证)。 |
 
 **关于副本一致性。** 本目录的 `draft_final.pdf` 在固定时间戳下构建，`draft_final.sha256` 记录其唯一哈希，重出后逐字节一致（见 [`BUILD.md`](BUILD.md)）。通过预印本平台、邮件或其他渠道流通的副本，正文与本版本相同，但 PDF 元数据（`CreationDate` 等）可能不同，因此字节哈希不等于本仓库记录值。判断正文是否为同一版，请比对文字；判断是否为同一次构建，请用本仓库的哈希。
 
@@ -153,3 +153,16 @@ M1  masked failure (the defect)
 
 该目录下的 `main.sha256` 可自检；`python3 metabolism_paper/pack_v2.py` 会打印归档哈希并说明是否仍与
 Zenodo 上的 v2 一致。若不打印 `matches`，说明源码在 deposit 之后被改动过——这是需要知道的信息，不是构建失败。
+
+---
+
+## 许可证
+
+MIT，见 [`LICENSE`](LICENSE)。版权人 Zhizhi Liao（廖至智），年份 2026。
+
+MIT 授予使用、复制、修改、合并、发布、分发、再许可和销售的权利，唯一义务是保留版权声明和许可声明；
+同时附带担保与责任免责条款，所有内容按 "AS IS" 提供。论文正文与复现脚本适用同一份许可证。
+
+它**不授予认证**。跑通 `agent_audit_demo.py` 得到的是四个变异体的判词输出，是一次可复现的演示，
+不是对任何系统的审计结论；本项目的审计服务与这份开源材料是两件事。引用论文里的数字时，请连同
+「边界」一节一起引用——分母是探针套件，不是真实流量。
